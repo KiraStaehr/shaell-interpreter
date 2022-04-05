@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ShaellLang;
@@ -45,6 +46,16 @@ public class SString : BaseValue, ITable, IKeyable
         return false;
     }
 
+    public IEnumerable<IKeyable> GetKeys()
+    {
+        var rv = new List<Number>();
+        for (int i = 0; i < _val.Length; i++)
+        {
+            Number n = new Number(i);
+            rv.Add(n);
+        }
+        return rv;
+    }
     public RefValue GetValue(IKeyable key)
     {
         if (key is Number numberKey)

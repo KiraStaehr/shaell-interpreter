@@ -116,3 +116,11 @@ $print("rrgr" + "ksfogk")
 $print("skok" + 492)
 $print(942 + "bob")
 
+
+foreach $char in "hello" do
+    $print($char)
+end
+
+foreach $f in "123" do
+    $print($f)
+end

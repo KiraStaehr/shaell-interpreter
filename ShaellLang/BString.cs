@@ -95,5 +95,15 @@ public class BString : BaseValue, ITable
     public byte[] Buffer => _buffer;
     public string KeyValue => _val;
     public string UniquePrefix => "S";
-    
+
+    public IEnumerable<IKeyable> GetKeys()
+    {
+        var rv = new List<Number>();
+        for (int i = 0; i < _val.Length; i++)
+        {
+            Number n = new Number(i);
+            rv.Add(n);
+        }
+        return rv;
+    }
 }

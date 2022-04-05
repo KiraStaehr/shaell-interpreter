@@ -127,5 +127,29 @@ namespace ShaellLang
 		{
 			return other == this;
 		}
+
+		public IEnumerable<IKeyable> GetKeys()
+		{
+			
+			var rv = new List<IKeyable>();
+			for (int i = 0; i < _consecutiveValues.Count; i++)
+			{
+				Number n = new Number(i);
+				rv.Add(n);
+			}
+
+			foreach (var key in _sortedValues.Keys)
+			{
+				rv.Add(new Number(key));
+			}
+
+			foreach (var key in values.Keys)
+			{
+				var k = new RawKeyable(key);
+				rv.Add(k);
+			}
+			
+			return rv;
+		}
 	}
 }
