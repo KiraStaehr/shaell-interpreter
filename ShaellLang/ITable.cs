@@ -1,6 +1,6 @@
 namespace ShaellLang
 {
-	public interface ITable : IIterable 
+	public interface ITable
 	{
 		RefValue GetValue(IKeyable key);
 		void RemoveValue(IKeyable key);

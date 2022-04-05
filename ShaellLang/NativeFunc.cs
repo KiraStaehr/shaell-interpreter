@@ -19,7 +19,10 @@ namespace ShaellLang
 		//Implement IFunction
 		
 		public IValue Call(IEnumerable<IValue> args) => new JobObject(_callHandler(args));
-		
+		public override SString ToSString()
+		{
+			return new SString("nativeFunc");
+		}
 
 		public uint ArgumentCount {  get; private set; }
 		

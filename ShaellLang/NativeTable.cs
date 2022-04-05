@@ -33,15 +33,4 @@ public class NativeTable : ITable
     {
         return;
     }
-
-    public IEnumerable<IKeyable> GetKeys()
-    {
-        var rv = new List<Number>();
-        for (int i = 0; i < valueLookup.Count; i++)
-        {
-            Number n = new Number(i);
-            rv.Add(n);
-        }
-        return rv;
-    }
 }

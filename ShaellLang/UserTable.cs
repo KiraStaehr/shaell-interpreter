@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace ShaellLang
 {
-	public class UserTable : BaseValue, ITable
+	public class UserTable : BaseValue, ITable, IIterable
 	{
-		private Dictionary<string, RefValue> values;
+		private Dictionary<IKeyable, RefValue> values;
 		//Store the array values in order
 		private SortedDictionary<int, RefValue> _sortedValues;
 		//Store the integer keys in an array
@@ -90,6 +90,11 @@ namespace ShaellLang
 					}
 					if (number <= int.MaxValue)
 					{
+						if (_sortedValues.TryGetValue((int) number, out RefValue thing))
+						{
+							return thing;
+						}
+
 						var newVal = new RefValue(new SNull());
 						_sortedValues[(int) number] = newVal;
 						return newVal;
@@ -148,7 +153,6 @@ namespace ShaellLang
 				var k = new RawKeyable(key);
 				rv.Add(k);
 			}
-			
 			return rv;
 		}
 	}

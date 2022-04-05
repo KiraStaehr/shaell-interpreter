@@ -116,15 +116,6 @@ $print("rrgr" + "ksfogk")
 $print("skok" + 492)
 $print(942 + "bob")
 
-foreach $char in "hello" do
-    $print($char)
-end
-
-foreach $f in "123" do
-    $print($f)
-end
-
-
 $testvalue = 3
 $testvalue += 5
 $print($testvalue)
@@ -135,3 +126,16 @@ $print($testvalue)
 $testvalue /= 2
 $print($testvalue)
 
+foreach $char in "hello" do
+    $print($char)
+end
+
+foreach $f in "123" do
+    $print($f)
+end
+
+
+$t = {a=1, b=4, c=-1, [2]=9, ["21"]=78}
+foreach $abe in $t do
+    $print($abe)
+end

@@ -39,6 +39,14 @@ fn $TestCompoundExpr()
     $A:assert($string == "ab", "String concatenation through += operator")
 end    
 
+fn $TestForeach()
+    $table = (a=1, b=4, c=-1, [2]=9, ["21"]=78)
+    foreach $key in $table do
+        $key +1;
+    end    
+    $print($table)
+end
+
 $A:describe("Test strings", $TestStringOp)
 $A:describe("Test numbers", $TestNumberOp)
 $A:describe("Test compound expressions", $TestCompoundExpr)

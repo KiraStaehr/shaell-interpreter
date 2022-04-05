@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ShaellLang;
 
-public class SString : BaseValue, ITable, IKeyable
+public class SString : BaseValue, ITable, IKeyable, IIterable
 {
     private string _val;
     private NativeTable _nativeTable;
@@ -19,6 +19,11 @@ public class SString : BaseValue, ITable, IKeyable
         
         _nativeTable.SetValue("length", new NativeFunc(lengthCallHandler, 0));
         _nativeTable.SetValue("substring", new NativeFunc(SubStringFunc, 2));
+    }
+
+    public override int GetHashCode()
+    {
+        return (UniquePrefix + KeyValue).GetHashCode();
     }
 
     private IValue SubStringFunc(IEnumerable<IValue> argCollection)

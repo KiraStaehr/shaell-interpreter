@@ -84,7 +84,7 @@ Lacks functions and comments
 
 prog: stmts | programArgs stmts;
 stmts: stmt*;
-stmt: ifStmt | forLoop | whileLoop | returnStatement | functionDefinition | foreach | expr;
+stmt: ifStmt | forLoop | whileLoop | returnStatement | functionDefinition | foreach | foreachKeyValue | expr;
 boolean: TRUE # TrueBoolean 
     | FALSE # FalseBoolean
     ;
@@ -143,3 +143,4 @@ whileLoop: WHILE expr DO stmts END;
 functionDefinition: FUNCTION VARIDENTFIER LPAREN innerFormalArgList RPAREN stmts END;
 returnStatement: RETURN expr;
 foreach: FOREACH VARIDENTFIER IN expr DO stmts END;
+foreachKeyValue: FOREACH VARIDENTFIER COMMA VARIDENTFIER IN expr DO stmts END;

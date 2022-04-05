@@ -22,6 +22,11 @@ namespace ShaellLang
             _numberRepresentation = value;
         }
 
+        public override int GetHashCode()
+        {
+            return (UniquePrefix + KeyValue).GetHashCode();
+        }
+
         public bool IsInteger => _numberRepresentation is long;
 
         public bool IsFloating => _numberRepresentation is double;
