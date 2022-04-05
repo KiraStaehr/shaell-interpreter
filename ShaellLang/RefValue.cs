@@ -10,9 +10,10 @@ public class RefValue : BaseValue
         _realValue = val;
     }
     
-    public void Set(IValue newValue)
+    public IValue Set(IValue newValue)
     {
         _realValue = newValue;
+        return _realValue;
     }
 
     public IValue Get()

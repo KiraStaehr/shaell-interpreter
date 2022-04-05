@@ -20,5 +20,25 @@ fn $TestNumberOp()
     $A:assert(2 ** 3 == 8, "Number exponentiation through ^ operator")
 end
 
+fn $TestCompoundExpr()
+    $value = 5
+    $value += 10
+    $A:assert($value == 15, "Number addition through += operator")
+    $value -= 10
+    $A:assert($value == 5, "Number subtraction through -= operator")
+    $value *= 2
+    $A:assert($value == 10, "Number multiplication through *= operator")
+    $value /= 2
+    $A:assert($value == 5, "Number division through /= operator")
+    $value %= 2
+    $A:assert($value == 1, "Number modulo through %= operator")
+    $value **= 2
+    $A:assert($value == 1, "Number exponentiation through **= operator")
+    $string = "a"
+    $string += "b"
+    $A:assert($string == "ab", "String concatenation through += operator")
+end    
+
 $A:describe("Test strings", $TestStringOp)
 $A:describe("Test numbers", $TestNumberOp)
+$A:describe("Test compound expressions", $TestCompoundExpr)

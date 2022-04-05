@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaellLang", "ShaellLang\Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaellLang.StdLibrary", "ShaellLang.StdLibrary\ShaellLang.StdLibrary.csproj", "{67703F29-FE46-40ED-9A7A-B7E4BBE3494D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaellLang.Test", "ShaellLang.Test\ShaellLang.Test.csproj", "{E0C47E32-27AF-4684-84EA-1A37D99835E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{67703F29-FE46-40ED-9A7A-B7E4BBE3494D}.Release|x64.Build.0 = Release|Any CPU
 		{67703F29-FE46-40ED-9A7A-B7E4BBE3494D}.Release|x86.ActiveCfg = Release|Any CPU
 		{67703F29-FE46-40ED-9A7A-B7E4BBE3494D}.Release|x86.Build.0 = Release|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Debug|x64.Build.0 = Debug|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Debug|x86.Build.0 = Debug|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Release|x64.ActiveCfg = Release|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Release|x64.Build.0 = Release|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{E0C47E32-27AF-4684-84EA-1A37D99835E8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

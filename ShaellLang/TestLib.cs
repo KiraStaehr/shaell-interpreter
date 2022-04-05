@@ -4,10 +4,13 @@ using System.Linq;
 
 namespace ShaellLang;
 
-public class TestLib
+public static class TestLib
 {
+    public static bool testFailed { get; private set; }
+    
     public static IValue CreateLib()
     {
+        testFailed = false;
         var userTable = new UserTable();
         userTable
             .GetValue(new SString("assert"))
@@ -82,6 +85,7 @@ public class TestLib
             Console.WriteLine($"Test \"{name}\" failed");
             Console.ResetColor();
             Console.WriteLine(e);
+            testFailed = true;
         }
         
         return new SNull();

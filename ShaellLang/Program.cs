@@ -31,7 +31,7 @@ namespace ShaellLang
                 ShaellParser shaellParser = new ShaellParser(commonTokenStream);
             
                 ShaellParser.ProgContext progContext = shaellParser.prog();
-                var executer = new ExecutionVisitor();
+                var executer = new ExecutionVisitor(args[1..]);
                 executer.SetGlobal("$print", new NativeFunc(delegate(IEnumerable<IValue> args)
                 {
                     foreach (var value in args)

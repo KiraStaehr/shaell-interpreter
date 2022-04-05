@@ -20,6 +20,7 @@ FUNCTION: 'fn';
 GLOBAL: 'global';
 ASYNC: 'async';
 DEFER: 'defer';
+ARGS: 'args';
 LPAREN: '(';
 RPAREN: ')';
 LCURL: '{';
@@ -62,6 +63,7 @@ BANDEQ: '&=';
 BXOREQ: '^=';
 BOREQ: '|=';
 MODEQ: '%=';
+POWEQ: '**=';
 RSHIFTEQ: '>>=';
 LSHIFTEQ: '<<=';
 FALSE: 'false';
@@ -80,7 +82,7 @@ WHITESPACE: (' ' | '\t' | '\r' | '\n')+ -> skip;
 Lacks functions and comments
 */
 
-prog: stmts;
+prog: stmts | programArgs stmts;
 stmts: stmt*;
 stmt: ifStmt | forLoop | whileLoop | returnStatement | functionDefinition | foreach | expr;
 boolean: TRUE # TrueBoolean 
@@ -117,6 +119,12 @@ expr: STRINGLITERAL # StringLiteralExpr
     | expr LOR expr # LORExpr
     | expr PIPE expr # PIPEExpr
 	|<assoc=right> expr ASSIGN expr # AssignExpr
+	|<assoc=right> expr PLUSEQ expr  # PlusEqExpr
+	|<assoc=right> expr MINUSEQ expr # MinusEqExpr
+	|<assoc=right> expr MULTEQ expr # MultEqExpr
+	|<assoc=right> expr DIVEQ expr # DivEqExpr
+    |<assoc=right> expr MODEQ expr # ModEqExpr
+    |<assoc=right> expr POWEQ expr # PowEqExpr
 	;
 objfields:
     FILEIDENTFIER # FieldIdentifier
@@ -128,6 +136,7 @@ identifier:
     FILEIDENTFIER #FileIdentifier
     | VARIDENTFIER #VarIdentifier
     ;
+programArgs: ARGS LPAREN innerFormalArgList RPAREN;
 ifStmt: IF expr THEN stmts (ELSE stmts)? END;
 forLoop: FOR expr COMMA expr COMMA expr DO stmts END;
 whileLoop: WHILE expr DO stmts END;
