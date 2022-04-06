@@ -117,7 +117,7 @@ public class ExecutionVisitor : ShaellBaseVisitor<IValue>
             foreach (IKeyable keys in iterable.GetKeys())
             {
                 _scopeManager.PushScope(new ScopeContext());
-                var x = _scopeManager.SetValue(context.VARIDENTFIER().GetText(),table.GetValue(keys));
+                _scopeManager.SetValue(context.VARIDENTFIER().GetText(),table.GetValue(keys));
                 var rv = Visit(context.stmts());
                 _scopeManager.PopScope();
                 if (_shouldReturn)
@@ -127,18 +127,23 @@ public class ExecutionVisitor : ShaellBaseVisitor<IValue>
         return null;
     }
 
-    public IValue VisitForeachKeyValue(ShaellParser.ForeachKeyValueContext context)
+    public override IValue VisitForeachKeyValue(ShaellParser.ForeachKeyValueContext context)
     {
         var v = Visit(context.expr()).Unpack();
         if (v is IIterable iterable && v is ITable table)
         {
-            foreach (IKeyable keys in iterable.GetKeys())    
+            foreach (IKeyable key in iterable.GetKeys())    
             {
                 _scopeManager.PushScope(new ScopeContext());
-                var value = _scopeManager.SetValue(context.VARIDENTFIER(0).GetText(), table.GetValue(keys));
-                var keyValue = _scopeManager.SetValue(context.VARIDENTFIER(1).GetText(),)
+                _scopeManager.SetValue(context.VARIDENTFIER(0).GetText(), table.GetValue(key));
+                _scopeManager.SetValue(context.VARIDENTFIER(1).GetText(), key);
+                var rv = Visit(context.stmts());
+                _scopeManager.PopScope();
+                if (_shouldReturn)
+                    return rv;
             }
         }
+        return null;
     }
 
     public override IValue VisitWhileLoop(ShaellParser.WhileLoopContext context)

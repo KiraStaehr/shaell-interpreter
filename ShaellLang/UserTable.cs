@@ -17,7 +17,7 @@ namespace ShaellLang
 		public UserTable() 
 			: base("usertable")
 		{
-			values = new Dictionary<string, RefValue>();
+			values = new Dictionary<IKeyable, RefValue>();
 			_consecutiveValues = new List<RefValue>();
 			_sortedValues = new SortedDictionary<int, RefValue>();
 			SetValue(new SString("length"), new NativeFunc(LengthFunc, 0));
@@ -43,7 +43,7 @@ namespace ShaellLang
 		private RefValue SetValue(IKeyable key, IValue value)
 		{
 			RefValue refValue = new RefValue(value);
-			values.Add(KeyValue(key), refValue);
+			values.Add(key, refValue);
 			return refValue;
 		}
 
@@ -103,7 +103,7 @@ namespace ShaellLang
 					
 			}
 			
-			bool exists = values.TryGetValue(KeyValue(key), out RefValue value);
+			bool exists = values.TryGetValue(key, out RefValue value);
 			if (exists)
 			{
 				return value;
@@ -115,7 +115,7 @@ namespace ShaellLang
 
 		public void RemoveValue(IKeyable key)
 		{
-			values.Remove(KeyValue(key));
+			values.Remove(key);
 		}
 
 		public override bool ToBool()
@@ -135,23 +135,18 @@ namespace ShaellLang
 
 		public IEnumerable<IKeyable> GetKeys()
 		{
-			
 			var rv = new List<IKeyable>();
 			for (int i = 0; i < _consecutiveValues.Count; i++)
 			{
-				Number n = new Number(i);
-				rv.Add(n);
+				rv.Add(new Number(i));
 			}
-
 			foreach (var key in _sortedValues.Keys)
 			{
 				rv.Add(new Number(key));
 			}
-
 			foreach (var key in values.Keys)
 			{
-				var k = new RawKeyable(key);
-				rv.Add(k);
+				rv.Add(key);
 			}
 			return rv;
 		}
