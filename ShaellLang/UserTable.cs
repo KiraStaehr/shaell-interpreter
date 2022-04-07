@@ -1,154 +1,46 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Antlr4.Runtime.Atn;
 
 namespace ShaellLang
 {
-	public class UserTable : BaseValue, ITable, IIterable
+	public class UserTable : BaseTable, IIterable
 	{
-		private Dictionary<IKeyable, RefValue> values;
-		//Store the array values in order
-		private SortedDictionary<int, RefValue> _sortedValues;
-		//Store the integer keys in an array
-		private List<RefValue> _consecutiveValues;
+		public UserTable MetaTable { get; set; }
 		
-		private string KeyValue(IKeyable key) => key.UniquePrefix + key.KeyValue;
-		public UserTable() 
-			: base("usertable")
+		public UserTable() : base("usertable")
 		{
-			values = new Dictionary<IKeyable, RefValue>();
-			_consecutiveValues = new List<RefValue>();
-			_sortedValues = new SortedDictionary<int, RefValue>();
 			SetValue(new SString("length"), new NativeFunc(LengthFunc, 0));
 			SetValue(new SString("insert"), new NativeFunc(InsertFunc, 1));
+			SetValue(new SString("set_meta_table"), new NativeFunc(SetMetaTableFunc, 1));
 		}
 
-		public IValue InsertFunc(IEnumerable<IValue> args)
+		/// <summary>
+		/// Returns the value indexed by the given key. If the key is not found, the key is tied to a SNull value.
+		/// </summary>
+		/// <param name="key">The key to search for.</param>
+		/// <returns>The value that is tied to the key</returns>
+		public override RefValue GetValue(IKeyable key)
 		{
-			foreach (var arg in args)
-			{
-				var newValue = this.GetValue(new Number(_consecutiveValues.Count));
-				newValue.Set(arg);
-			}
+			RefValue value;
+			
+			if (ContainsKey(key))
+				 return base.GetValue(key);
 
-			return new SNull();
+			if (MetaTable?.ContainsKey(key) != null) 
+				 return MetaTable.GetValue(key);
+		
+
+			return InsertEmpty(key);
 		}
 
-		public IValue LengthFunc(IEnumerable<IValue> args)
+		public IValue SetMetaTableFunc(IEnumerable<IValue> args)
 		{
-			return new Number(_consecutiveValues.Count);
-		}
-
-		private RefValue SetValue(IKeyable key, IValue value)
-		{
-			RefValue refValue = new RefValue(value);
-			values.Add(key, refValue);
-			return refValue;
-		}
-
-		private void MoveConsecutiveValues()
-		{
-			var targetValues = new List<int>();
-			foreach (var val in _sortedValues)
-			{
-				if (val.Key == _consecutiveValues.Count)
-				{
-					_consecutiveValues.Add(val.Value);
-					targetValues.Add(val.Key);
-				}
-				else
-				{
-					break;
-				}
-			}
-
-			foreach (var targetValue in targetValues)
-			{
-				_sortedValues.Remove(targetValue);
-			}
+			var table = args.First() as UserTable;
+			MetaTable = table;
+			return MetaTable;
 		}
 		
-		public RefValue GetValue(IKeyable key)
-		{
-			if (key is Number {IsInteger: true} numberKey)
-			{
-				var number = numberKey.ToInteger();
-				if (number >= 0)
-				{
-					if (number < _consecutiveValues.Count)
-					{
-						//We can cast to int since we have already bounds checked the number
-						return _consecutiveValues[(int) number];
-					}
-					if (number == _consecutiveValues.Count)
-					{
-						var newVal = new RefValue(new SNull());
-						_consecutiveValues.Add(newVal);
-						MoveConsecutiveValues();
-						return newVal;
-					}
-					if (number <= int.MaxValue)
-					{
-						if (_sortedValues.TryGetValue((int) number, out RefValue thing))
-						{
-							return thing;
-						}
-
-						var newVal = new RefValue(new SNull());
-						_sortedValues[(int) number] = newVal;
-						return newVal;
-					}
-				} 
-					
-			}
-			
-			bool exists = values.TryGetValue(key, out RefValue value);
-			if (exists)
-			{
-				return value;
-			}
-			
-			//Since keys should be implicitly defined we just add the key and return it
-			return SetValue(key, new SNull());
-		}
-
-		public void RemoveValue(IKeyable key)
-		{
-			values.Remove(key);
-		}
-
-		public override bool ToBool()
-		{
-			return true;
-		}
-		
-		public override ITable ToTable()
-		{
-			return this;
-		}
-
-		public override bool IsEqual(IValue other)
-		{
-			return other == this;
-		}
-
-		public IEnumerable<IKeyable> GetKeys()
-		{
-			var rv = new List<IKeyable>();
-			for (int i = 0; i < _consecutiveValues.Count; i++)
-			{
-				rv.Add(new Number(i));
-			}
-			foreach (var key in _sortedValues.Keys)
-			{
-				rv.Add(new Number(key));
-			}
-			foreach (var key in values.Keys)
-			{
-				rv.Add(key);
-			}
-			return rv;
-		}
 	}
 }

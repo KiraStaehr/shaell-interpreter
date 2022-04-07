@@ -51,7 +51,7 @@ public class SString : BaseValue, ITable, IKeyable, IIterable
         return false;
     }
 
-    public IEnumerable<IKeyable> GetKeys()
+    public IEnumerable<IValue> GetKeys()
     {
         var rv = new List<Number>();
         for (int i = 0; i < _val.Length; i++)
@@ -78,7 +78,7 @@ public class SString : BaseValue, ITable, IKeyable, IIterable
         return _nativeTable.GetValue(key);
     }
 
-    public void RemoveValue(IKeyable key)
+    public void RemoveValue(IValue key)
     {
         return;
     }

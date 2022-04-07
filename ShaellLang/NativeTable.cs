@@ -29,7 +29,7 @@ public class NativeTable : ITable
         return null;
     }
 
-    public virtual void RemoveValue(IKeyable key)
+    public virtual void RemoveValue(IValue key)
     {
         return;
     }

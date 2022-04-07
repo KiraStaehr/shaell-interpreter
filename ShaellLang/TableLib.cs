@@ -16,6 +16,10 @@ public class TableLib
         userTable
             .GetValue(new SString("length"))
             .Set(new NativeFunc(LengthFunc, 1));
+        
+        userTable
+            .GetValue(new SString("set_meta_table"))
+            .Set(new NativeFunc(SetMetaTable, 2));
 
         return userTable;
     }
@@ -37,5 +41,16 @@ public class TableLib
             return userTable.LengthFunc(args.Skip(1));
         }
         throw new Exception("error: no table supplied");
+    }
+    
+    private static IValue SetMetaTable(IEnumerable<IValue> args)
+    {
+        var argArr = args.ToArray();
+        if (argArr[0] is UserTable userTable && argArr[1] is UserTable metaTable)
+        {
+            return userTable.MetaTable = metaTable;
+        }
+        
+        throw new Exception("error in setting meta table.");
     }
 }

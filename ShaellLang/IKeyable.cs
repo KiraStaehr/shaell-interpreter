@@ -4,5 +4,6 @@ namespace ShaellLang
 	{
 		string KeyValue { get; }
 		string UniquePrefix { get; }
+		public string ToString() => UniquePrefix + KeyValue;
 	}
 }

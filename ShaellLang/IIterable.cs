@@ -5,7 +5,5 @@ namespace ShaellLang;
 
 public interface IIterable 
 {
-    public IEnumerable<IKeyable> GetKeys(); 
-    
-
+    public IEnumerable<IValue> GetKeys();
 }
