@@ -15,6 +15,7 @@ public class ScopeManager
     public ScopeManager CopyScopes()
     {
         ScopeManager rv = new ScopeManager();
+        //We look from the reverse order since the last scope added is the most important
         foreach (var scope in _scopes)
         {
             rv.PushScope(scope);
@@ -25,7 +26,7 @@ public class ScopeManager
     
     public RefValue GetValue(string key)
     {
-        foreach (var scope in _scopes)
+        foreach (var scope in _scopes.AsEnumerable().Reverse())
         {
             var rv = scope.GetValue(key);
             if (rv != null)
@@ -37,9 +38,9 @@ public class ScopeManager
         return null;
     }
 
-    public RefValue SetValue(string key, IValue val)
+    public RefValue NewTopLevelValue(string key, IValue val)
     {
-        return _scopes.Last().SetValue(key, val);
+        return _scopes.Last().NewValue(key, val);
     }
 
     public void PushScope(ScopeContext scopeContext)

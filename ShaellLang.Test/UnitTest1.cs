@@ -7,10 +7,10 @@ public class UnitTest1
     private ShaellLang shaellLang = new ShaellLang();
     
     [Fact]
-    public void Test1()
+    public void TestOperators()
     {
         // Act  
-        bool testFailed = shaellLang.Run("../../../test.æ", new string[]{"test.æ", ""});
+        bool testFailed = shaellLang.Run("../../../OperatorTest.æ", new string[]{"OperatorTest.æ", ""});
 
         // Assert
         Assert.False(testFailed);
@@ -20,7 +20,7 @@ public class UnitTest1
     public void TestMetaTables()
     {   
         // Act  
-        bool testFailed = shaellLang.Run("../../../metatable.æ", new string[]{"metatable.æ", ""});
+        bool testFailed = shaellLang.Run("../../../MetatableTest.æ", new string[]{"MetatableTest.æ", ""});
 
         // Assert
         Assert.False(testFailed);
@@ -30,9 +30,20 @@ public class UnitTest1
     public void TestStringInterpolation()
     {
         // Act
-        bool testFailed = shaellLang.Run("../../../stringinterpolation.æ", new string[]{"string_interpolation.æ", ""});
+        bool testFailed = shaellLang.Run("../../../StringInterpolationTest.æ", new string[]{"StringInterpolationTest.æ", ""});
         
         // Assert
         Assert.False(testFailed);
     }
+    
+    [Fact]
+    public void TestScope()
+    {
+        // Act
+        bool testFailed = shaellLang.Run("../../../ScopeTest.æ", new string[]{"ScopeTest.æ", ""});
+        
+        // Assert
+        Assert.False(testFailed);
+    }
+    
 }

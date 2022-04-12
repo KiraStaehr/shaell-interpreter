@@ -7,14 +7,16 @@ options {
 prog: stmts | programArgs stmts;
 stmts: stmt*;
 stmt: ifStmt | forLoop | whileLoop | returnStatement | functionDefinition | foreach | foreachKeyValue | expr;
-boolean: TRUE # TrueBoolean 
+boolean: 
+    TRUE # TrueBoolean 
     | FALSE # FalseBoolean
     ;
 expr: DQUOTE strcontent* END_STRING # StringLiteralExpr
+    | LET IDENTIFIER # LetExpr
     | NUMBER # NumberExpr
     | NULL # NullExpr
 	| boolean # BooleanExpr
-	| identifier # IdentifierExpr
+	| IDENTIFIER # IdentifierExpr
 	| LPAREN expr RPAREN # Parenthesis
 	| LCURL (objfields ASSIGN expr (COMMA objfields ASSIGN expr)*)? RCURL #ObjectLiteral
 	|<assoc=right> DEREF expr # DerefExpr
@@ -22,7 +24,7 @@ expr: DQUOTE strcontent* END_STRING # StringLiteralExpr
 	|<assoc=right> BNOT expr # BnotExpr
 	|<assoc=right> MINUS expr # NegExpr
 	|<assoc=right> PLUS expr # PosExpr
-	| expr COLON identifier # IdentifierIndexExpr
+	| expr COLON IDENTIFIER # IdentifierIndexExpr
 	| expr LSQUACKET expr RSQUACKET # SubScriptExpr
 	| expr LPAREN innerArgList RPAREN # FunctionCallExpr
 	| expr POW expr # PowExpr
@@ -55,21 +57,17 @@ strcontent:
     | TEXT # StringLiteral
     ;
 objfields:
-    FILEIDENTFIER # FieldIdentifier
+    IDENTIFIER # FieldIdentifier
     | LSQUACKET expr RSQUACKET #FieldExpr
     ;
 innerArgList: (expr (COMMA expr)*)?;
-innerFormalArgList: (VARIDENTFIER (COMMA VARIDENTFIER)*)?;
-identifier: 
-    FILEIDENTFIER #FileIdentifier
-    | VARIDENTFIER #VarIdentifier
-    ;
+innerFormalArgList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
 programArgs: ARGS LPAREN innerFormalArgList RPAREN;
 ifStmt: IF expr THEN stmts (ELSE stmts)? END;
 forLoop: FOR expr COMMA expr COMMA expr DO stmts END;
 foreach: FOREACH VARIDENTFIER IN expr DO stmts END;
 foreachKeyValue: FOREACH VARIDENTFIER COMMA VARIDENTFIER IN expr DO stmts END;
 whileLoop: WHILE expr DO stmts END;
-functionDefinition: FUNCTION VARIDENTFIER LPAREN innerFormalArgList RPAREN stmts END;
+functionDefinition: FUNCTION IDENTIFIER LPAREN innerFormalArgList RPAREN stmts END;
 anonFunctionDefinition: FUNCTION LPAREN innerFormalArgList RPAREN stmts END;
 returnStatement: RETURN expr;

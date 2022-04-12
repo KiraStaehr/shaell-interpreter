@@ -33,7 +33,7 @@ public class UserFunc : BaseValue, IFunction
         var arr = args.ToArray();
         for (var i = 0; i < arr.Length && i < _formalArguments.Count; i++)
         {
-            activeScopeManager.SetValue(_formalArguments[i], arr[i]);
+            activeScopeManager.NewTopLevelValue(_formalArguments[i], arr[i]);
         }
 
         var executioner = new ExecutionVisitor(_globalScope, activeScopeManager);

@@ -1,0 +1,15 @@
+fn AddTwoNumbers(num1, num2)
+    let result = num1 + num2
+    return result
+end
+
+fn StringInterpolation()
+    let string = "3 plus 3 gives ${3 + 3}"
+    A:assert(string == "3 plus 3 gives 6", "String interpolation arithmetic expression" )
+    let name = "Bob"
+    let nameString = "Hello, my name is ${name}"
+    A:assert(nameString == "Hello, my name is Bob", "String interpolation variable")
+    A:assert("The result is ${AddTwoNumbers(3, 3)}" == "The result is 6", "String interpolation function call")
+end
+
+A:describe("String interpolation", StringInterpolation)

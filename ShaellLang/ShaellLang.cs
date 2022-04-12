@@ -22,7 +22,7 @@ namespace ShaellLang
 
 				ShaellParser.ProgContext progContext = shaellParser.prog();
 				var executer = new ExecutionVisitor(args[1..]);
-				executer.SetGlobal("$print", new NativeFunc(delegate(IEnumerable<IValue> args)
+				executer.SetGlobal("print", new NativeFunc(delegate(IEnumerable<IValue> args)
 				{
 					foreach (var value in args)
 					{
@@ -34,11 +34,11 @@ namespace ShaellLang
 					return new SNull();
 				}, 0));
 
-				executer.SetGlobal("$T", TableLib.CreateLib());
+				executer.SetGlobal("T", TableLib.CreateLib());
 
-				executer.SetGlobal("$A", TestLib.CreateLib());
+				executer.SetGlobal("A", TestLib.CreateLib());
 
-				executer.SetGlobal("$debug_break", new NativeFunc(delegate(IEnumerable<IValue> args)
+				executer.SetGlobal("debug_break", new NativeFunc(delegate(IEnumerable<IValue> args)
 				{
 					Console.WriteLine("Debug break");
 					return new SNull();
@@ -49,7 +49,8 @@ namespace ShaellLang
 			catch (SyntaxErrorException e)
 			{
 				Console.WriteLine(e.Message);
-				
+				return TestLib.testFailed;
+
 			}
 			return TestLib.testFailed;
 		}

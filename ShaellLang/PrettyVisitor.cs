@@ -61,19 +61,7 @@ namespace ShaellLang
             Visit(booleanexpr.boolean());
             return null;
         }
-
-        public override object VisitIdentifierExpr(ShaellParser.IdentifierExprContext identifierExprContext)
-        {
-            Visit(identifierExprContext.identifier());
-            return null;
-        }
-
-        public override object VisitIdentifier(ShaellParser.IdentifierContext context)
-        {
-            Console.Write(context.GetText());
-            return null;
-        }
-
+        
         public override object VisitParenthesis(ShaellParser.ParenthesisContext parenthesisContext)
         {
             Console.Write("(");
@@ -119,7 +107,7 @@ namespace ShaellLang
             Console.Write("(");
             Visit(identifierIndexExpr.expr());
             Console.Write(":");
-            Visit(identifierIndexExpr.identifier());
+            Visit(identifierIndexExpr.IDENTIFIER());
             Console.Write(")");
             return null;
         }
@@ -199,10 +187,10 @@ namespace ShaellLang
         public override object VisitFunctionDefinition(ShaellParser.FunctionDefinitionContext context)
         {
             Console.Write(indent + "fn ");
-            Console.Write(context.VARIDENTFIER());
+            Console.Write(context.IDENTIFIER());
             Console.Write("(");
             bool first = true;
-            foreach (var arg in context.innerFormalArgList().VARIDENTFIER())
+            foreach (var arg in context.innerFormalArgList().IDENTIFIER())
             {
                 if (first)
                 {

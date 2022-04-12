@@ -3,7 +3,6 @@
 public class RefValue : BaseValue
 {
     private IValue _realValue;
-
     public RefValue(IValue val)
         : base("refvalue")
     {

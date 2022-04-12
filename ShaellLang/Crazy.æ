@@ -1,139 +1,146 @@
-﻿$per = 2 + 1
-$benis = "benis }"
+﻿args(bob, bob2, bo3, bo4)
+
+print(bob)
+print(bo3, bo4)
+print("all args")
+for let i = 0, i < processargs:length(), i += 1 do
+    print(processargs[i])
+end
+
+let per = 2 + 1
+let benis = "benis }"
 
 
-fn $g()
-    $print("gay")
+fn g()
+    print("gay")
     return 69
 end
 
-$print("Hello from denmark \n hello } team ${2}")
+let nej = {hej = "shrink"}
 
-fn $printHalloShaell($nej)
-    $print("Hej fra shæll :)")
-    $print($nej)
+print("Hello from denmark \n hello } team {nej:hej}")
+
+fn printHalloShaell(nej)
+    print("Hej fra shæll :)")
+    debug_break()
+    print(nej)
 end
 
-fn $funcMedReturVaerdi($n)
-    return 2 + $n
+fn funcMedReturVaerdi(n)
+    return 2 + n
 end
 
-fn $callbackfn($n)
-    fn $funktionDerPrintern($n)
-        $print($n)
+fn callbackfn(n)
+    fn funktionDerPrintern(n)
+        print(n)
     end
-    return $funktionDerPrintern
+    return funktionDerPrintern
 end
 
-fn $medCallback($callback)
-    $callback(2)
+fn medCallback(callback)
+    callback(2)
 end
 
-$medCallback($callbackfn(5))
+medCallback(callbackfn(5))
 
-$print("Hællo from shæll!")
+print("Hællo from shæll!")
 
-$test = {thing = 1}
-$print($test:thing)
-$print($test:thing)
-$str = "abcdefg"
 
-$i = 0
-while $i < $str:length() do
-    $print($str[$i])
-    $i = $i + 1
+let str = "abcdefg"
+
+let i = 0
+while i < str:length() do
+    print(str[i])
+    i = i + 1
 end
 
-$print($str[3 + 1])
+print(str[3 + 1])
 
-$printMenBedre = $print
+let printMenBedre = print
 
-$printMenBedre("Hej fra bedre print")
+printMenBedre("Hej fra bedre print")
 
 
-$printHalloShaell("Ekstra besked")
+printHalloShaell("Ekstra besked")
 
-$printHalloShaell(120)
+printHalloShaell(120)
 
-$print(
+print(
     "det er da fed at få retur værdier som ", 
-    $funcMedReturVaerdi(4), 
+    funcMedReturVaerdi(4), 
     " og vide at 391 + 2902 = ", 
     391 + 2902, 
     "!"
 )
 
-$obj = {thing = 1}
+let obj = {thing = 1}
 
-$print("haha ", $obj:thing + 2, " benis")
+print("haha ", obj:thing + 2, " benis")
 "skokd":length()
 
-$print("haha benis")
+print("haha benis")
 
 if true then
-    $print("haha benis")
+    print("haha benis")
 end
 
 if false then
-    $print("nej ikke benis")
+    print("nej ikke benis")
 end
 
-$thing = {[0] = 0, [1] = 1, [6] = 6, [3] = 3, [2] = 2, [19] = 19}
+let thing = {[0] = 0, [1] = 1, [6] = 6, [3] = 3, [2] = 2, [19] = 19}
 
-$thing:insert("4 som streng")
-$thing:insert(5, 7)
-
-$i = 0
-while $i < $thing:length() do
-    $print($thing[$i])
-    $i = $i + 1
+thing:insert("4 som streng")
+thing:insert(5, 7)
+i = 0
+debug_break()
+while i < thing:length() do
+    print(thing[i])
+    i = i + 1
 end
 
-$print("------------------")
+print("------------------")
 
-$print($thing:length())
+print(thing:length())
 
-$fib_cache = {[0] = 0, [1] = 1}
+let fib_cache = {[0] = 0, [1] = 1}
 
-fn $fib($n)
-    if $fib_cache[$n] == null then
-        $fib_cache[$n] = $fib($n - 1) + $fib($n - 2)
+fn fib(n)
+    if fib_cache[n] == null then
+        fib_cache[n] = fib(n - 1) + fib(n - 2)
     end
-    return $fib_cache[$n]
+    return fib_cache[n]
 end
 
-$var = 123:sqrt()
+let var = 123:sqrt()
 
-$print($var)
-$print(23.12:log2())
-$print(2313.32:log(24))
+print(var)
+print(23.12:log2())
+print(2313.32:log(24))
 
-$print("------------------")
+print("------------------")
 
-$obj = {[0] = 0, [1] = 1, [2] = 2}
+obj = {[0] = 0, [1] = 1, [2] = 2}
 
-$debug_break($obj)
-$debug_break($T)
+print(T:length(obj))
 
-$print($T:length($obj))
+T:insert(obj, 3, 4)
 
-$T:insert($obj, 3, 4)
+print(T:length(obj))
 
-$print($T:length($obj))
+print("-" * 10)
+print(9 * "-")
 
-$print("-" * 10)
-$print(9 * "-")
+print("rrgr" + "ksfogk")
+print("skok" + 492)
+print(942 + "bob")
 
-$print("rrgr" + "ksfogk")
-$print("skok" + 492)
-$print(942 + "bob")
-
-$testvalue = 3
-$testvalue += 5
-$print($testvalue)
-$testvalue *= 2
-$print($testvalue)
-$testvalue -= 2
-$print($testvalue)
-$testvalue /= 2
-$print($testvalue)
+let testvalue = 3
+testvalue += 5
+print(testvalue)
+testvalue *= 2
+print(testvalue)
+testvalue -= 2
+print(testvalue)
+testvalue /= 2
+print(testvalue)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ShaellLang;
@@ -18,9 +19,14 @@ public class ScopeContext
         return found ? foundValue : null;
     }
 
-    public RefValue SetValue(string key, IValue val)
+    public RefValue NewValue(string key, IValue val)
     {
         RefValue rv = new RefValue(val);
+        if (_values.ContainsKey(key))
+        {
+            throw new Exception($"Variable {key} already declared name");
+        }
+        
         _values[key] = rv;
         return rv;
     }
