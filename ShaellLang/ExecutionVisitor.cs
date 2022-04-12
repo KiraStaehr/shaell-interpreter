@@ -146,7 +146,7 @@ public class ExecutionVisitor : ShaellParserBaseVisitor<IValue>
             foreach (var key in iterable.GetKeys())
             {
                 _scopeManager.PushScope(new ScopeContext());
-                _scopeManager.SetValue(context.VARIDENTFIER().GetText(), table.GetValue(key));
+                _scopeManager.NewTopLevelValue(context.IDENTIFIER().GetText(), table.GetValue(key));
                 var rv = SafeVisit(context.stmts());
                 _scopeManager.PopScope();
                 if (_shouldReturn)
@@ -160,13 +160,13 @@ public class ExecutionVisitor : ShaellParserBaseVisitor<IValue>
     public override IValue VisitForeachKeyValue(ShaellParser.ForeachKeyValueContext context)
     {
         var v = SafeVisit(context.expr()).Unpack();
-        if (v is IIterable iterable && v is ITable table)
+        if(v is IIterable iterable && v is ITable table)
         {
             foreach (var key in iterable.GetKeys())
             {
                 _scopeManager.PushScope(new ScopeContext());
-                _scopeManager.SetValue(context.VARIDENTFIER(0).GetText(), table.GetValue(key));
-                _scopeManager.SetValue(context.VARIDENTFIER(1).GetText(), key);
+                _scopeManager.NewTopLevelValue(context.IDENTIFIER(0).GetText(), key);
+                _scopeManager.NewTopLevelValue(context.IDENTIFIER(1).GetText(), table.GetValue(key));
                 var rv = SafeVisit(context.stmts());
                 _scopeManager.PopScope();
                 if (_shouldReturn)

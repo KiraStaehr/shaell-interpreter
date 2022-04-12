@@ -3,8 +3,8 @@
 print(bob)
 print(bo3, bo4)
 print("all args")
-for let i = 0, i < processargs:length(), i += 1 do
-    print(processargs[i])
+for let i = 0, i < $argv:length(), i += 1 do
+    print($argv[i])
 end
 
 let per = 2 + 1
@@ -144,3 +144,13 @@ testvalue -= 2
 print(testvalue)
 testvalue /= 2
 print(testvalue)
+
+foreach s in "hello" do 
+    print(s)
+end
+
+let ok = {[0] = 0, [1] = 1, [2] = 3}
+
+foreach k, v in ok do
+    print(" hej " + k)
+end

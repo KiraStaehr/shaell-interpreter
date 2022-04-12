@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ShaellLang;
 
-public class BaseTable : BaseValue, ITable
+public class BaseTable : BaseValue, ITable, IIterable
 {
     //Store all values that cannot be stored in an array
     private Dictionary<IValue, RefValue> _values = new();
@@ -151,4 +151,25 @@ public class BaseTable : BaseValue, ITable
         return other == this;
     }
 
+    public IEnumerable<IValue> GetKeys()
+    {
+        var rv = new List<IValue>();
+        foreach (var key in _values)   
+        {
+            rv.Add(key.Key);
+        }
+
+        for(int i = 0; i < _consecutiveValues.Count; i++)
+        {
+            var v = new Number(i);
+            rv.Add(v);
+        }
+
+        foreach (var key in _sortedValues)
+        {
+            var v = new Number(key.Key);
+            rv.Add(v);
+        }
+        return rv;  
+    }
 }
