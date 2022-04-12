@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
@@ -124,6 +125,46 @@ public class ExecutionVisitor : ShaellParserBaseVisitor<IValue>
             if (_shouldReturn)
                 return rv;
             SafeVisit(context.expr()[2]);
+        }
+        return null;
+    }
+
+    public override IValue VisitForeach(ShaellParser.ForeachContext context)
+    {
+        var v = SafeVisit(context.expr()).Unpack();
+        if(v is IIterable iterable && v is ITable table)
+        {
+            foreach (var key in iterable.GetKeys())
+            {
+                _scopeManager.PushScope(new ScopeContext());
+                _scopeManager.SetValue(context.VARIDENTFIER().GetText(), table.GetValue(key));
+                var rv = SafeVisit(context.stmts());
+                _scopeManager.PopScope();
+                if (_shouldReturn)
+                    return rv;
+            }
+        }
+
+        return null;
+    }
+
+    public override IValue VisitForeachKeyValue(ShaellParser.ForeachKeyValueContext context)
+    {
+        var v = SafeVisit(context.expr()).Unpack();
+        if (v is IIterable iterable && v is ITable table)
+        {
+            foreach (var key in iterable.GetKeys())
+            {
+                _scopeManager.PushScope(new ScopeContext());
+                _scopeManager.SetValue(context.VARIDENTFIER(0).GetText(), table.GetValue(key));
+                _scopeManager.SetValue(context.VARIDENTFIER(1).GetText(), key);
+                var rv = SafeVisit(context.stmts());
+                _scopeManager.PopScope();
+                if (_shouldReturn)
+                {
+                    return rv;
+                }
+            }
         }
         return null;
     }

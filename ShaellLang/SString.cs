@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShaellLang;
 
-public class SString : BaseValue, ITable
+public class SString : BaseValue, ITable, IIterable
 {
     private string _val;
     private NativeTable _nativeTable;
@@ -69,6 +69,18 @@ public class SString : BaseValue, ITable
     public override string ToString()
     {
         return _val;
+    }
+
+    public IEnumerable<IValue> GetKeys()
+    {
+        var rv = new List<Number>();
+        for (int i = 0; i < _val.Length; i++)
+        {
+            var n = new Number(i);
+            rv.Add(n);
+        }
+        
+        return rv;
     }
 
     public static SString operator +(SString left, SString right)

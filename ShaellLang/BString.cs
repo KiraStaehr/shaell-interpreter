@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShaellLang;
 
-public class BString : BaseValue, ITable
+public class BString : BaseValue, ITable, IIterable
 {
     private string _val;
     private byte[] _buffer;
@@ -95,5 +95,15 @@ public class BString : BaseValue, ITable
     public byte[] Buffer => _buffer;
     public string KeyValue => _val;
     public string UniquePrefix => "S";
-    
+
+    public IEnumerable<IValue> GetKeys()
+    {
+        var rv = new List<Number>();
+        for (int i = 0; i < _val.Length; i++)
+        {
+            var n = new Number(i);
+            rv.Add(n);
+        }
+        return rv;        
+    }
 }
